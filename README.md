@@ -1,6 +1,17 @@
 # URL Shortener Microservice
 
-Микросервис для сокращения ссылок, аналог Bitly. Написан на **FastAPI** + **SQLAlchemy (async)** + **PostgreSQL/SQLite**.
+# URL Shortener Backend
+
+Асинхронный сервис сокращения URL на FastAPI.
+
+**Реализовано:**
+- POST /shorten — создание короткой ссылки
+- GET /{short_id} — редирект с подсчётом переходов  
+- GET /stats/{short_id} — статистика
+
+**Стек:** FastAPI, SQLAlchemy 2.0 (async), PostgreSQL, Docker Compose
+
+**Frontend:** React Native (планируется)
 
 ---
 
