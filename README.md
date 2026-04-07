@@ -10,7 +10,7 @@
 
 ```bash
 # 1. Клонируй репозиторий
-git clone <repo-url>
+git clone https://github.com/dimKucher/shortener
 cd url_shortener
 
 # 2. Создай виртуальное окружение
@@ -136,11 +136,27 @@ curl http://localhost:8000/health
 
 ## Переменные окружения
 
-| Переменная       | По умолчанию                              | Описание                                 |
-|------------------|-------------------------------------------|------------------------------------------|
-| `DATABASE_URL`   | `sqlite+aiosqlite:///./url_shortener.db`  | Строка подключения к БД                  |
-| `BASE_URL`       | `http://localhost:8000`                   | Базовый URL для формирования коротких ссылок |
-| `SHORT_ID_LENGTH`| `6`                                       | Длина короткого идентификатора (мин. 4)  |
+| Переменная                | По умолчанию / Значение                       | Описание                                                              |
+| ------------------------- |-----------------------------------------------| --------------------------------------------------------------------- |
+| `CORS_ALLOW_ORIGINS`      | `http://localhost:3000,http://localhost:8000` | Список разрешённых источников (origins) для CORS                      |
+| `CORS_ALLOW_ORIGIN_REGEX` | `http://localhost:.*,https://localhost:.*`    | Регулярное выражение для разрешённых источников CORS                  |
+| `CORS_ALLOW_METHODS`      | `GET,POST,PUT,DELETE,OPTIONS,HEAD,PATCH`      | Разрешённые HTTP-методы для CORS                                      |
+| `CORS_ALLOW_HEADERS`      | `*`                                           | Разрешённые HTTP-заголовки для CORS                                   |
+| `CORS_ALLOW_CREDENTIALS`  | `true`                                        | Разрешить использование cookies и авторизации при CORS                |
+| `CORS_MAX_AGE`            | `600`                                         | Время (в секундах), на которое браузер кэширует CORS preflight запрос |
+| `API_TOKEN`               | `use-your-secret-token`                       | Секретный токен для аутентификации API                                |
+| `TOKEN_HEADER_NAME`       | `X-API-Token`                                 | Имя заголовка, в котором ожидается токен                              |
+| `DATABASE_URL`            | `sqlite+aiosqlite:///./url_shortener.db`      | Полная строка подключения к БД (используется по умолчанию)            |
+| `DB_PREFIX`               | `'postgresql+asyncpg'`                        | Префикс для формирования строки подключения к PostgreSQL              |
+| `DB_NAME`                 | `db_name`                                     | Имя базы данных                                                       |
+| `DB_USER`                 | `db_user`                                     | Пользователь базы данных                                              |
+| `DB_PASSWORD`             | `db_password`                                 | Пароль пользователя базы данных                                       |
+| `DB_HOST`                 | `db_host`                                     | Хост базы данных                                                      |
+| `DB_PORT`                 | `5432`                                        | Порт базы данных                                                      |
+| `BASE_URL`                | `http://localhost:8000`                       | Базовый URL сервиса для генерации коротких ссылок                     |
+| `SHORT_ID_LENGTH`         | `6`                                           | Длина короткого идентификатора (минимум 4)                            |
+
+
 
 ---
 
@@ -149,9 +165,6 @@ curl http://localhost:8000/health
 ```bash
 # Все тесты
 pytest tests/ -v
-
-# С отчётом покрытия
-pytest tests/ -v --cov=app --cov-report=term-missing
 
 # Только unit-тесты сервисного слоя
 pytest tests/test_url_service.py -v
@@ -165,13 +178,14 @@ pytest tests/test_api.py -v
 ## Архитектура
 
 ```
-app/
-├── main.py           # Точка входа FastAPI, lifespan, middleware
-├── config.py         # Настройки через pydantic-settings
-├── database.py       # Async engine, сессии, Base
-├── models/           # SQLAlchemy ORM модели
-├── schemas/          # Pydantic схемы запросов и ответов
-├── routers/          # FastAPI роутеры (HTTP слой)
-├── services/         # Бизнес-логика (сервисный слой)
-└── utils/            # Утилиты (генератор short_id)
+backend/
+├ app/
+│ ├── config.py         # Настройки через pydantic-settings
+│ ├── database.py       # Async engine, сессии, Base
+│ ├── models/           # SQLAlchemy ORM модели
+│ ├── schemas/          # Pydantic схемы запросов и ответов
+│ ├── routers/          # FastAPI роутеры (HTTP слой)
+│ ├── services/         # Бизнес-логика (сервисный слой)
+│ └── utils/            # Утилиты (генератор short_id)
+└──  main.py            # Точка входа FastAPI, lifespan, middleware
 ```
