@@ -1,0 +1,44 @@
+services:
+
+  # ─── PostgreSQL ─────────────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:  ${DB_NAME:-urlshortener}
+      POSTGRES_USER:  ${DB_USER:-user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d urlshortener"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # ─── App ────────────────────────────────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: api
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    environment:
+      DATABASE_URL:  ${DATABASE_URL:-postgresql+asyncpg://user:password@db:5432/urlshortener}
+      BASE_URL:  ${BASE_URL:-http://localhost:8000}
+      SHORT_ID_LENGTH:  ${SHORT_ID_LENGTH:-"6"}
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+volumes:
+  postgres_data:
+    driver: local
