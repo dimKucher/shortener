@@ -1,7 +1,5 @@
 # URL Shortener Microservice
 
-# URL Shortener Backend
-
 Асинхронный сервис сокращения URL на FastAPI.
 
 **Реализовано:**
