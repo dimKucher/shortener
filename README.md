@@ -1,15 +1,48 @@
-# URL Shortener Microservice
+<div align="center">
 
-Асинхронный сервис сокращения URL на FastAPI.
+# 🔗 URL Shortener Microservice
 
-**Реализовано:**
-- POST /shorten — создание короткой ссылки
-- GET /{short_id} — редирект с подсчётом переходов  
-- GET /stats/{short_id} — статистика
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0+-D71F00?style=for-the-badge&logo=sqlalchemy&logoColor=white)](https://www.sqlalchemy.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
 
-**Стек:** FastAPI, SQLAlchemy 2.0 (async), PostgreSQL, Docker Compose
+**Асинхронный сервис сокращения URL на FastAPI**
 
-**Frontend:** React Native (планируется)
+[Документация API](#-api-reference) • [Быстрый старт](#-быстрый-старт) • [Docker](#-docker) • [Архитектура](#-архитектура)
+
+</div>
+
+---
+
+## ✨ Реализовано
+
+| Эндпоинт | Метод | Описание |
+|----------|-------|----------|
+| `/shorten` | `POST` | Создание короткой ссылки |
+| `/{short_id}` | `GET` | Редирект с подсчётом переходов |
+| `/stats/{short_id}` | `GET` | Статистика переходов |
+| `/health` | `GET` | Проверка состояния сервиса |
+
+## 🛠 Технологический стек
+
+<div align="center">
+
+| Категория | Технологии |
+|-----------|------------|
+| **Framework** | ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat-square&logo=fastapi) |
+| **Язык** | ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python) |
+| **ORM** | ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0+-D71F00?style=flat-square&logo=sqlalchemy) |
+| **База данных** | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql) ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite) |
+| **Контейнеризация** | ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker) ![Docker Compose](https://img.shields.io/badge/Docker_Compose-2496ED?style=flat-square&logo=docker) |
+| **Валидация** | ![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=flat-square&logo=pydantic) |
+| **Логирование** | ![Loguru](https://img.shields.io/badge/Loguru-000000?style=flat-square) |
+
+**Frontend (в планах):** ![React Native](https://img.shields.io/badge/React_Native-20232A?style=flat-square&logo=react) ![Expo](https://img.shields.io/badge/Expo-000020?style=flat-square&logo=expo)
+
+</div>
 
 ---
 
